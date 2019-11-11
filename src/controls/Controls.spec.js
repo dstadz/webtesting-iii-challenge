@@ -1,10 +1,19 @@
-// Test away!
 // Test away
 import React from 'react'
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Controls from './Controls'
 
 
-test("Dashoard renders", () => {
-  render(<Controls/>)
+
+test('Controls rendering', () =>{
+  expect(render(<Controls />)).toMatchSnapshot();
+})
+
+test("unlock => lock ", () => {
+  const toggleLock = jest.fn()
+  const { getByText } = render(
+    <Controls toggleLocked = { toggleLock } locked={false} />
+  )
+  fireEvent.click(getByText(/close gate/i))
+  expect(toggleLock).toHaveBeenCalled()
 })
